@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message for Bemthoi</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff0f0; /* Soft pink background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        #question {
+            color: #ff1493;
+            font-size: 2.2rem;
+            text-align: center;
+            position: absolute;
+            top: 15%;
+            z-index: 100;
+            width: 90%;
+            pointer-events: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.1s ease;
+        }
+
+        #yesBtn { background-color: #28a745; color: white; }
+        #noBtn { background-color: #dc3545; color: white; }
+
+        /* Success Screen State */
+        #successScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff1493; /* Vibrant pink for success */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            z-index: 1000;
+        }
+
+        .success-content {
+            padding: 20px;
+            max-width: 80%;
+        }
+
+        h1.message { font-size: 3rem; margin-bottom: 10px; }
+        p.sub-message { font-size: 1.8rem; }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">Please Unblock me Bemthoi</h1>
+
+    <div class="btn-container" id="prankUI">
+        <button id="yesBtn">YES</button>
+        <button id="noBtn">No</button>
+    </div>
+
+    <div id="successScreen">
+        <div class="success-content">
+            <h1 class="message">Thank u babe, lets talk now! 😘</h1>
+            <p class="sub-message">Now come here you! 😉</p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const prankUI = document.getElementById('prankUI');
+        const question = document.getElementById('question');
+        const successScreen = document.getElementById('successScreen');
+
+        let yesScale = 1;
+
+        const moveButton = () => {
+            // Teleport the No button
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // Grow the Yes button
+            yesScale += 0.5;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        };
+
+        // Handles both desktop hover and mobile taps
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('click', moveButton);
+
+        yesBtn.addEventListener('click', () => {
+            // Hide the game, show the result
+            prankUI.style.display = 'none';
+            question.style.display = 'none';
+            successScreen.style.display = 'flex';
+            
+            // Fire the celebration
+            confetti({
+                particleCount: 200,
+                spread: 90,
+                origin: { y: 0.6 }
+            });
+        });
+    </script>
+</body>
+</html>
